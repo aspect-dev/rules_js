@@ -311,6 +311,38 @@ def npm_link_all_packages(name = "node_modules", imported_links = []):
 
     if is_root:
         _npm_package_store(
+            name = ".aspect_rules_js/{}/lodash@0.0.0".format(name),
+            src = "//vendored/lodash-4.17.21.tgz:pkg",
+            package = "lodash",
+            version = "0.0.0",
+            deps = {},
+            visibility = ["//visibility:public"],
+            tags = ["manual"],
+        )
+
+    for link_package in ["<LOCKVERSION>"]:
+        if link_package == bazel_package:
+            # terminal target for direct dependencies
+            _npm_link_package_store(
+                name = "{}/lodash".format(name),
+                src = "//<LOCKVERSION>:.aspect_rules_js/{}/lodash@0.0.0".format(name),
+                visibility = ["//visibility:public"],
+                tags = ["manual"],
+            )
+
+            # filegroup target that provides a single file which is
+            # package directory for use in $(execpath) and $(rootpath)
+            native.filegroup(
+                name = "{}/lodash/dir".format(name),
+                srcs = [":{}/lodash".format(name)],
+                output_group = "package_directory",
+                visibility = ["//visibility:public"],
+                tags = ["manual"],
+            )
+            link_targets.append(":{}/lodash".format(name))
+
+    if is_root:
+        _npm_package_store(
             name = ".aspect_rules_js/{}/@scoped+a@0.0.0".format(name),
             src = "//projects/a:pkg",
             package = "@scoped/a",
@@ -514,6 +546,10 @@ def npm_link_targets(name = "node_modules", package = None):
     for link_package in ["<LOCKVERSION>"]:
         if link_package == bazel_package:
             link_targets.append("//{}:{}/@scoped/c".format(bazel_package, name))
+
+    for link_package in ["<LOCKVERSION>"]:
+        if link_package == bazel_package:
+            link_targets.append("//{}:{}/lodash".format(bazel_package, name))
 
     for link_package in ["<LOCKVERSION>", "projects/b", "projects/c", "projects/d"]:
         if link_package == bazel_package:

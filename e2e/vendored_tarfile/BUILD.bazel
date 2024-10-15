@@ -7,5 +7,12 @@ build_test(
     name = "test",
     targets = [
         ":node_modules",
+        ":node_modules/lodash",
+        ":.aspect_rules_js/node_modules/lodash@4.17.21",
     ],
 )
+
+exports_files([
+    "package.json",
+    "lodash-4.17.21.tgz",
+])
