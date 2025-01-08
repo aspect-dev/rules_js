@@ -485,6 +485,11 @@ def _convert_v9_packages(packages, snapshots):
         # package_data can have the resolved "version" for things like https:// deps
         friendly_version = package_data["version"] if "version" in package_data else static_key[version_index + 1:]
 
+        # direct reference to tarball files: use the friendly_version to align with pnpm <v9 which
+        # uses the resolved version in the package store.
+        if _is_vendored_tarfile(package_data):
+            version = friendly_version
+
         package_info = _new_package_info(
             id = package_data.get("id", None),  # TODO: does v9 have "id"?
             name = name,
