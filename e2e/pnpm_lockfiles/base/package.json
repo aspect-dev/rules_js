@@ -13,6 +13,7 @@
         "hello": "https://gitpkg.vercel.app/EqualMa/gitpkg-hello/packages/hello",
         "jsonify": "https://github.com/aspect-build/test-packages/releases/download/0.0.0/@foo-jsonify-0.0.0.tgz",
         "jquery-git-ssh-e61fccb": "git+ssh://git@github.com/jquery/jquery.git#e61fccb9d736235b4b011f89cba6866bc0b8997d",
+        "lodash": "file:../vendored/lodash-4.17.21.tgz",
         "rollup": "2.14.0",
         "rollup3": "npm:rollup@3.29.4",
         "rollup-plugin-with-peers": "npm:@rollup/plugin-typescript@8.2.1",
@@ -36,7 +37,7 @@
         "@aspect-test/b": "5.0.2",
         "@types/node": "16.18.11",
         "@types/archiver": "5.3.1",
-        "alias-only-sizzle": "npm:@types/sizzle@~2.3.8",
+        "alias-only-sizzle": "npm:@types/sizzle@~2.3.9",
         "alias-types-node": "npm:@types/node@~16.18.11"
     },
     "optionalDependencies": {
